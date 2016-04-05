@@ -1,8 +1,8 @@
 ﻿using ForecastIO.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Globalization;
 using System.Text;
-using System.Web.Script.Serialization;
 
 namespace ForecastIO
 {
@@ -39,11 +39,8 @@ namespace ForecastIO
                 _apiCallsMade = client.ResponseHeaders["X-Forecast-API-Calls"];
             }
 
-            var serializer = new JavaScriptSerializer();
-            var dataObject = serializer.Deserialize<ForecastIOResponse>(result);
-
+            var dataObject = JsonConvert.DeserializeObject<ForecastIOResponse>(result);
             return dataObject;
-
         }
 
         public ForecastIORequest(string apiKey, float latF, float longF, Unit unit, Language? lang = null, Extend[] extend = null, Exclude[] exclude = null )
